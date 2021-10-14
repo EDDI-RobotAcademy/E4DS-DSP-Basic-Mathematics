@@ -14,6 +14,7 @@ XY_AXIS = $(MAIN)/xy_axis
 Y_X_PLOT = $(MAIN)/y_x_plot
 XYZ_AXIS = $(MAIN)/xyz_axis
 DRAW_CONE = $(MAIN)/draw_cone
+VECTOR_OPERATION_PLOT = $(MAIN)/vector_operation_plot
 
 all: main
 	@echo $(TARGET)
@@ -24,6 +25,7 @@ all: main
 	$(shell cp $(Y_X_PLOT) ./build/)
 	$(shell cp $(XYZ_AXIS) ./build/)
 	$(shell cp $(DRAW_CONE) ./build/)
+	$(shell cp $(VECTOR_OPERATION_PLOT) ./build/)
 
 main:	_all
 	$(MAKE) -C $(MAIN)

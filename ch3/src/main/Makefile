@@ -14,7 +14,7 @@ LIBS = -lGL -lglut -lm -lGLU
 
 OBJS = $(SRCS:%.c=%.o)
 
-TARGET = gl_window y_x_plot xy_axis draw_cone xyz_axis
+TARGET = gl_window y_x_plot xy_axis draw_cone xyz_axis vector_operation_plot
 
 #FILE_CONTROL_DIR = $(PWD)/../file
 
@@ -47,6 +47,10 @@ xyz_axis:	xyz_axis.o
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
 draw_cone:	draw_cone.o
+	@echo "$<"
+	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
+
+vector_operation_plot:	vector_operation_plot.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
