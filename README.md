@@ -1,2 +1,2 @@
-# E4DS-DSP-Basic-Mathematics
-E4DS-DSP-Basic-Mathematics
+# Engineering-Mathematics
+Engineering Mathematics with C Programming
