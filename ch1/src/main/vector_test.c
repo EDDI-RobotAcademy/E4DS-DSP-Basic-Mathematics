@@ -3,6 +3,8 @@
 
 int main(void)
 {
+	int i;
+
 	vec3 A = {3, 2, 1};
 	vec3 B = {1, 1, 1};
 	vec3 X = {1, 0, 0};
@@ -19,6 +21,7 @@ int main(void)
 	printf("Magnitude of Vector: %f\n", magnitude(A));
 
 	printf("단위 벡터\n");
+	// 단위 벡터 = 임의의 벡터 / 임의의 벡터 크기
 	R.scale(1.0f / magnitude(A), A, &unit_A);
 	print_vec3(unit_A);
 
@@ -38,14 +41,23 @@ int main(void)
 	R.print(R);
 
 	printf("벡터 내적\n");
+	// 수직 판정에 많이 활용
 	printf("A dot B = %f\n", R.dot(A, B));
+
+	printf("벡터 내적을 통한 수직 검사\n");
+	printf("X dot Y = %f\n", R.dot(X, Y));
 
 	printf("벡터 외적\n");
 	R.cross(X, Y, &R);
 	printf("A cross B = ");
 	R.print(R);
 
-	// R.gramschmidt(v, w, R);
+	R.gramschmidt(v, w, R);
+	// R.print(R);
+	for (i = 0; i < 3; i++)
+	{
+		R.print(w[i]);
+	}
 
 	return 0;
 }
