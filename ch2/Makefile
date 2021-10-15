@@ -11,6 +11,9 @@ TARGET = $(SRCS:%.c=%)
 
 MAT3_TEST = $(MAIN)/mat3_test
 
+LINEAR_ALGEBRA = $(SRC)/linear_algebra
+SUBDIRS = $(LINEAR_ALGEBRA)
+
 all: main
 	@echo $(TARGET)
 	$(shell rm -rf build)

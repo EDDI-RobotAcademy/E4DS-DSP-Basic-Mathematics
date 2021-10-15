@@ -1,7 +1,9 @@
+#ifndef __MATRIX_3D_H__
+#define __MATRIX_3D_H__
+
+#include "linear_algebra/mat3.h"
+
 #include <stdbool.h>
-#include <stdlib.h>
-#include <stdio.h>
-#include <time.h>
 
 void init_mat(float (*A)[3]);
 void print_mat(float (*R)[3]);
@@ -25,3 +27,5 @@ void create_3x6_mat(float (*A)[3], float (*R)[6]);
 void print_3x6_mat(float (*R)[6]);
 void adjust_3x6_mat(float (*A)[6], int idx, float (*R)[6]);
 void gauss_elim_mat(float (*A)[3], float (*R)[3]);
+
+#endif

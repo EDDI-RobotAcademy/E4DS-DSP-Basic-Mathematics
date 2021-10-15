@@ -1,5 +1,11 @@
-#include "mat3.h"
+#include "linear_algebra/mat3.h"
 
+#include <time.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <stdbool.h>
+
+// (float [3] *) A
 void init_mat(float (*A)[3])
 {
 	int i, j;
@@ -61,6 +67,12 @@ A[2][0]*B[0][0]+A[2][1]*B[1][0]+A[2][2]*B[2][0]		A[2][0]*B[0][1]+A[2][1]*B[1][1]
 
 void mul_mat(float (*A)[3], float (*B)[3], float (*R)[3])
 {
+	// for 문 사용은 권장하지 않음
+	// CPU Pipeline이 branch instruction이 발생하면 깨지게됨
+	// 3단계 - Fetch -> Decode -> Exectuion
+	// branch가 발생을 하면 기존에 Fetch, Decode단계에 있던 정보들이 소실됨
+	// Fetch, Decode를 branch된 위치에서 새롭게 받아오게 되기 때문에
+	// 코드가 짧은 경우엔 성능상의 이유로 하드코딩을 권장합니다.
 	R[0][0] = A[0][0]*B[0][0]+A[0][1]*B[1][0]+A[0][2]*B[2][0];
 	R[0][1] = A[0][0]*B[0][1]+A[0][1]*B[1][1]+A[0][2]*B[2][1];
 	R[0][2] = A[0][0]*B[0][2]+A[0][1]*B[1][2]+A[0][2]*B[2][2];
@@ -73,6 +85,16 @@ void mul_mat(float (*A)[3], float (*B)[3], float (*R)[3])
 	R[2][1] = A[2][0]*B[0][1]+A[2][1]*B[1][1]+A[2][2]*B[2][1];
 	R[2][2] = A[2][0]*B[0][2]+A[2][1]*B[1][2]+A[2][2]*B[2][2];
 }
+
+#if 0
+    a[0][0] 	a[0][1]		a[0][2]
+    ax			ay			az
+    bx			by			bz
+
+    i(x축 벡터) * (ay * bz) - (az * by)
+    j(y축 벡터) * (az * bx) - (ax * bz)
+    k(z축 벡터) * (ax * by) - (ay * bx)
+#endif
 
 float det_mat(float (*A)[3])
 {
@@ -98,6 +120,11 @@ void trans_mat(float (*A)[3], float (*R)[3])
 }
 
 #if 0
+	[0][0]		[0][1]		[0][2]
+	[1][0]		[1][1]		[1][2]
+	[2][0]		[2][1]		[2][2]
+
+
 	R[0][1] = A[1][2] * A[2][0] - A[1][0] * A[2][2];
 	R[0][2] = A[1][0] * A[2][1] - A[1][1] * A[2][0];
 
@@ -108,6 +135,7 @@ void trans_mat(float (*A)[3], float (*R)[3])
 	R[2][1] = A[0][2] * A[1][0] - A[0][0] * A[1][2];
 #endif
 
+// 수반 행렬 계산시 전치되는 부분을 고려해야함
 void adj_mat(float (*A)[3], float (*R)[3])
 {
 	R[0][0] = A[1][1] * A[2][2] - A[1][2] * A[2][1];
