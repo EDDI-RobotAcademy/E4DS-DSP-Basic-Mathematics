@@ -19,6 +19,7 @@ void display(void)
     // clear model view matrix
     glLoadIdentity();
     // multiply view matrix to current matrix
+	// 카메라
     gluLookAt(3.0, 3.0, 3.0-4.5, 0.0, 0.0,-4.5,0,1,0);
 
     // ******
@@ -66,7 +67,7 @@ void display(void)
     glTranslatef(0.0, 0.0, -100.0);
 
 	// 반경, 높이, 원을 그리는 조각, 원점부터 끝점까지 그리는 조각
-	glutWireCone(10, 100, 100, 100);
+	glutWireCone(20, 100, 100, 100);
     //glutSolidCone(10,100,1000,100);
 
     //glFlush();

@@ -16,10 +16,13 @@ void display(void)
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
+	// 사용자가 바라보는 시각이 어디가 될지를 지정함
+	// 요 부분은 추후 자료에 추가 및 설명을 보강할 예정
     gluLookAt(3.0, 3.0, 3.0-4.5, 0.0, 0.0,-4.5,0,1,0);
 
     glPushMatrix();
 
+	// 평행 이동 z축으로 -4.5만큼
     glTranslatef(0.0, 0.0, -4.5);
 
     glBegin(GL_LINES);

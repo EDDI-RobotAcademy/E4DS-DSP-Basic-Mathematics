@@ -5,9 +5,8 @@
 
 #include <GL/glut.h>
 
-#define SLICE	360
-
-void draw_y_x(void);
+void draw_y_x2(void);
+void draw_tangent(void);
 
 void display(void)
 {
@@ -15,21 +14,23 @@ void display(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	glLoadIdentity();
 
-	glColor3f(1, 0, 0);
+	glColor3f(0, 1, 0);
 
+	glLineWidth(1);
 	glBegin(GL_LINE_LOOP);
 	glVertex3f(100.0, 0.0, 0.0);
         glVertex3f(-100.0, 0.0, 0.0);
         glEnd();
-
-        glColor3f(0.0, 1.0, 0.0);
 
         glBegin(GL_LINE_LOOP);
         glVertex3f(0.0, 100.0, 0.0);
         glVertex3f(0.0, -100.0, 0.0);
     glEnd();
 
-	draw_y_x();
+	draw_y_x2();
+	glColor3f(1, 0, 0);
+	glLineWidth(5);
+	draw_tangent();
 	glutSwapBuffers();
 }
 
@@ -53,7 +54,54 @@ void reshape(int w, int h)
     glLoadIdentity();
 }
 
-void draw_y_x(void)
+void draw_tangent(void)
+{
+	float t = 0.0, interval = 0.2, delta = 0.001;
+	float y1 = 0, y2 = 0, cx, cy, ct;
+	int cnt = 0, cache = 0;
+
+	if(t > 100)
+		t = 0.0;
+
+	for(; ; t += delta)
+	{
+		float tangent;
+
+		if(t > 100)
+			break;
+
+		y1 = 50 * sin(0.25 * t);
+		y2 = 50 * sin(0.25 * (t + delta));
+		tangent = (y2 - y1) / delta;
+
+		if(cache && !(cnt % 1024))
+		{
+			printf("tangent = %f\n", ct);
+
+			glBegin(GL_LINES);
+				glVertex2f(
+					cx - interval,
+					50 * sin(0.25 * (cx - interval))
+				);
+				glVertex2f(
+					cx + interval,
+					50 * sin(0.25 * (cx + interval))
+				);
+			glEnd();
+
+			printf("cx = %f, cy = %f, ln(cx + interval) = %f\n",
+					cx, cy, log(cx + interval));
+		}
+
+		cache = 1;
+		cx = t;
+		cy = y1;
+		ct = tangent;
+		cnt++;
+	}
+}
+
+void draw_y_x2(void)
 {
 	float t = -100.0, step = 0.01;
 	float x = 0, x2 = 0, y2, cx, cy;
@@ -69,24 +117,17 @@ void draw_y_x(void)
 		if(t > 100)
 			break;
 
-		y2 = t;
+		y2 = 50 * sin(0.25 * t);;
 
 		if(cache)
 		{
-			// y'', y', y
-			// z^-2, z^-1, z
-			glVertex2f(cx, cy);	// 이전값
-			glVertex2f(t, y2);	// 현재값
-
-			// 이전 좌표 ~ 현재 좌표로 선을 긋는다.
-			// GSL - GNU Scientific Library() - 미분방정식 라이브러리
-			// 1계, 2계, RL Circuit Simulator
+			glVertex2f(cx, cy);
+			glVertex2f(t, y2);
 		}
 
 		cache = 1;
 		cx = t;
 		cy = y2;
-		printf("t = %f, y2 = %f\n", t, y2);
 	}
 	glEnd();
 }
