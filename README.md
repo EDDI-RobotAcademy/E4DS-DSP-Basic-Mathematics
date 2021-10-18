@@ -14,6 +14,7 @@ Engineering Mathematics with C Programming for DSP(Digital Signal Processing)
 3) ch3 - OpenGL Basics
 4) ch4 - First Order ODE(Ordinary Differential Equations)
 5) ch5 - Second Order ODE
-6) Laplace Transform
-7) Fourier Transform
+6) ch6 - RL Circuit Simulator
+7) Laplace Transform
+8) Fourier Transform
 ```
