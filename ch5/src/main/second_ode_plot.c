@@ -7,10 +7,22 @@
 
 #define SLICE	360
 
+int *jac;
+
 int rhs (double t, const double y[], double f[], void *params_ptr);
 //int jacobian (double t, const double y[], double *dfdy, double dfdt[], void *params_ptr);
 
-void draw_y_x(void);
+void draw_differential_eq_plot(void);
+void draw_lattice(void);
+
+typedef struct _xy_plot xy_plot;
+struct _xy_plot
+{
+	double x;
+	double y;
+};
+
+xy_plot plot_res[1001];
 
 void display(void)
 {
@@ -32,7 +44,8 @@ void display(void)
         glVertex3f(0.0, -100.0, 0.0);
     glEnd();
 
-	draw_y_x();
+	draw_differential_eq_plot();
+	draw_lattice();
 	glutSwapBuffers();
 }
 
@@ -47,78 +60,34 @@ void reshape(int w, int h)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
+#if 0
     if(w <= h)
         glOrtho(-n_range, n_range, -n_range * h / w, n_range * h / w, -n_range, n_range);
     else
         glOrtho(-n_range * w / h, n_range * w / h, -n_range, n_range, -n_range, n_range);
+#endif
+
+	glOrtho(-10, 10, -0.5, 0.5, -1, 1);
 
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 }
 
-void draw_y_x(void)
+int calc_vertices_num(void)
 {
-	float t = -100.0, step = 0.01;
-	float x = 0, x2 = 0, y2, cx, cy;
-	float tmp;
-	int cache = 0;
-
-	if(t > 100)
-		t = 0.0;
-
-	glBegin(GL_LINES);
-	for(; ; t += step)
-	{
-		if(t > 100)
-			break;
-
-		y2 = t;
-
-		if(cache)
-		{
-			// y'', y', y
-			// z^-2, z^-1, z
-			glVertex2f(cx, cy);	// 이전값
-			glVertex2f(t, y2);	// 현재값
-
-			// 이전 좌표 ~ 현재 좌표로 선을 긋는다.
-			// GSL - GNU Scientific Library() - 미분방정식 라이브러리
-			// 1계, 2계, RL Circuit Simulator
-		}
-
-		cache = 1;
-		cx = t;
-		cy = y2;
-		//printf("t = %f, y2 = %f\n", t, y2);
-	}
-	glEnd();
+	double tmin = 0.0, tmax = 10.0, delta_t = 0.01;
+	return (tmax - tmin) / delta_t;
 }
 
-int *jac;
-
-int main (int argc, char **argv)
+void calc_differential_eq(void)
 {
     int dimension = 2;		/* number of differential equations */
   
     double eps_abs = 1.e-8;	/* absolute error requested */
     double eps_rel = 1.e-10;	/* relative error requested */
 
-    /* define the type of routine for making steps: */
     const gsl_odeiv_step_type *type_ptr = gsl_odeiv_step_rkf45;
-    /* some other possibilities (see GSL manual):          
-       = gsl_odeiv_step_rk4;
-       = gsl_odeiv_step_rkck;
-       = gsl_odeiv_step_rk8pd;
-       = gsl_odeiv_step_rk4imp;
-       = gsl_odeiv_step_bsimp;  
-       = gsl_odeiv_step_gear1;
-       = gsl_odeiv_step_gear2;
-    */
 
-    /* 
-       allocate/initialize the stepper, the control function, and the
-       evolution function.
-    */
     gsl_odeiv_step *step_ptr = gsl_odeiv_step_alloc (type_ptr, dimension);
     gsl_odeiv_control *control_ptr = gsl_odeiv_control_y_new (eps_abs, eps_rel);
     gsl_odeiv_evolve *evolve_ptr = gsl_odeiv_evolve_alloc (dimension);
@@ -133,12 +102,19 @@ int main (int argc, char **argv)
 
     double h = 1e-6;		/* starting step size for ode solver */
 
-    /* load values into the my_system structure */
+	int cnt = 0;
+	int vertex_num = calc_vertices_num();
+#if 0
+	double res_x[vertex_num + 1] = {0};
+	double res_y[vertex_num + 1] = {0};
+
+	double *res_x = (double *)malloc(sizeof(double) * (vertex_num + 1));
+	double *res_y = (double *)malloc(sizeof(double) * (vertex_num + 1));
+#endif
+
     my_system.function = rhs;	/* the right-hand-side functions dy[i]/dt */
-    //my_system.jacobian = jacobian;	/* the Jacobian df[i]/dy[j] */
     my_system.jacobian = NULL;
     my_system.dimension = dimension;	/* number of diffeq's */
-    //my_system.params = &mu;	/* parameters to pass to rhs and jacobian */
     my_system.params = NULL;
 
     tmin = 0.;			/* starting t value */
@@ -151,7 +127,6 @@ int main (int argc, char **argv)
     t = tmin;             /* initialize t */
     printf ("%.5e %.5e %.5e\n", t, y[0], y[1]);	/* initial values */
 
-    /* step to tmax from tmin */
     for (t_next = tmin + delta_t; t_next <= tmax; t_next += delta_t)
     {
         while (t < t_next)	/* evolve from t to t_next */
@@ -159,18 +134,73 @@ int main (int argc, char **argv)
             gsl_odeiv_evolve_apply (evolve_ptr, control_ptr, step_ptr,
                                     &my_system, &t, t_next, &h, y);
         }
-        printf ("%.5e %.5e %.5e\n", t, y[0], y[1]); /* print at t=t_next */
+
+		plot_res[cnt].x = t;
+		plot_res[cnt].y = y[0];
+        printf ("%.5e %.5e %.5e\n", t, plot_res[cnt].x, plot_res[cnt].y); /* print at t=t_next */
+
+		cnt++;
     }
 
     gsl_odeiv_evolve_free (evolve_ptr);
     gsl_odeiv_control_free (control_ptr);
     gsl_odeiv_step_free (step_ptr);
+}
 
+void draw_lattice(void)
+{
+	int i;
+
+	glColor3f(1, 1, 0);
+	glBegin(GL_LINES);
+		for (i = 1; i <= 10; i++)
+		{
+			glVertex2f(i, -0.01);
+			glVertex2f(i, 0.01);
+		}
+	glEnd();
+}
+
+void draw_differential_eq_plot(void)
+{
+	float t = -100.0, step = 0.01;
+	float x = 0, x2 = 0, y2, cx, cy;
+	float tmp;
+	int cache = 0;
+	int i;
+
+	glBegin(GL_LINES);
+	//for(; ; t += step)
+	for (i = 0; i < 1000; i++)
+	{
+		x2 = plot_res[i].x;
+		y2 = plot_res[i].y;
+
+		if(cache)
+		{
+			glVertex2f(cx, cy);	// 이전값
+			glVertex2f(x2, y2);	// 현재값
+		}
+
+		cache = 1;
+		cx = x2;
+		cy = y2;
+		printf("t = %f, y2 = %f\n", x2, y2);
+	}
+	glEnd();
+
+}
+
+
+int main (int argc, char **argv)
+{
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_DOUBLE);
-	glutInitWindowSize(1200, 800);
+	glutInitWindowSize(800, 800);
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Digital Signal Processing");
+
+	calc_differential_eq();
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
