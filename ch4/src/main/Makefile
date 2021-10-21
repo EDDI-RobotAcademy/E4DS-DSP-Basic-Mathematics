@@ -9,12 +9,12 @@ PWD = $(shell pwd)
 INC_DIRS = -I$(PWD)/../include
 
 #LIBS = -lm -lGL -lglut -lGLU -lGLEW -lstdc++
-LIBS = -lGL -lglut -lm -lGLU
+LIBS = -lglut -lGL -lGLU -lgsl -lm
 #LIBS = -lm
 
 OBJS = $(SRCS:%.c=%.o)
 
-TARGET = gl_window y_x_plot xy_axis draw_cone xyz_axis vector_operation_plot
+TARGET = y_sin_x_integral y_sin_x_derivatives ode detail_yprime_exp_x rl_test
 
 #FILE_CONTROL_DIR = $(PWD)/../file
 
@@ -30,27 +30,23 @@ LINEAR_ALGEBRA_OBJS = $(shell find $(LINEAR_ALGEBRA_DIR) -name '*.o')
 
 all:	$(TARGET)
 
-gl_window:	gl_window.o
+y_sin_x_integral:	y_sin_x_integral.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
-y_x_plot:	y_x_plot.o
+y_sin_x_derivatives:	y_sin_x_derivatives.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
-xy_axis:	xy_axis.o
+ode:	ode.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
-xyz_axis:	xyz_axis.o
+detail_yprime_exp_x:	detail_yprime_exp_x.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
-draw_cone:	draw_cone.o
-	@echo "$<"
-	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
-
-vector_operation_plot:	vector_operation_plot.o
+rl_test:	rl_test.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 

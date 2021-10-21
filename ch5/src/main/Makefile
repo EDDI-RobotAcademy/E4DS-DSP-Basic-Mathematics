@@ -9,12 +9,12 @@ PWD = $(shell pwd)
 INC_DIRS = -I$(PWD)/../include
 
 #LIBS = -lm -lGL -lglut -lGLU -lGLEW -lstdc++
-LIBS = -lGL -lglut -lm -lGLU
+LIBS = -lGL -lglut -lm -lGLU -lgsl -lm
 #LIBS = -lm
 
 OBJS = $(SRCS:%.c=%.o)
 
-TARGET = gl_window y_x_plot xy_axis draw_cone xyz_axis vector_operation_plot
+TARGET = second_ode second_ode_plot
 
 #FILE_CONTROL_DIR = $(PWD)/../file
 
@@ -30,27 +30,11 @@ LINEAR_ALGEBRA_OBJS = $(shell find $(LINEAR_ALGEBRA_DIR) -name '*.o')
 
 all:	$(TARGET)
 
-gl_window:	gl_window.o
+second_ode:	second_ode.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
-y_x_plot:	y_x_plot.o
-	@echo "$<"
-	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
-
-xy_axis:	xy_axis.o
-	@echo "$<"
-	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
-
-xyz_axis:	xyz_axis.o
-	@echo "$<"
-	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
-
-draw_cone:	draw_cone.o
-	@echo "$<"
-	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
-
-vector_operation_plot:	vector_operation_plot.o
+second_ode_plot:	second_ode_plot.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 

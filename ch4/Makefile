@@ -4,28 +4,26 @@ INC = $(PWD)/include
 
 MAIN = $(SRC)/main
 
-LIBS = -lGL -lglut -lm -lglu
+LIBS = -lglut -lGL -lGLU -lgsl -lm
 
 SRCS = $(wildcard *.c)
 TARGET = $(SRCS:%.c=%)
 
-GL_WINDOW = $(MAIN)/gl_window
-XY_AXIS = $(MAIN)/xy_axis
-Y_X_PLOT = $(MAIN)/y_x_plot
-XYZ_AXIS = $(MAIN)/xyz_axis
-DRAW_CONE = $(MAIN)/draw_cone
-VECTOR_OPERATION_PLOT = $(MAIN)/vector_operation_plot
+Y_SINX_INTEGRAL = $(MAIN)/y_sin_x_integral
+Y_SINX_DERIVATIVE = $(MAIN)/y_sin_x_derivatives
+ODE = $(MAIN)/ode
+YPRIME_EXPX = $(MAIN)/detail_yprime_exp_x
+RL_TEST = $(MAIN)/rl_test
 
 all: main
 	@echo $(TARGET)
 	$(shell rm -rf build)
 	$(shell mkdir build)
-	$(shell cp $(GL_WINDOW) ./build/)
-	$(shell cp $(XY_AXIS) ./build/)
-	$(shell cp $(Y_X_PLOT) ./build/)
-	$(shell cp $(XYZ_AXIS) ./build/)
-	$(shell cp $(DRAW_CONE) ./build/)
-	$(shell cp $(VECTOR_OPERATION_PLOT) ./build/)
+	$(shell cp $(Y_SINX_INTEGRAL) ./build/)
+	$(shell cp $(Y_SINX_DERIVATIVE) ./build/)
+	$(shell cp $(ODE) ./build/)
+	$(shell cp $(YPRIME_EXPX) ./build/)
+	$(shell cp $(RL_TEST) ./build/)
 
 main:	_all
 	$(MAKE) -C $(MAIN)

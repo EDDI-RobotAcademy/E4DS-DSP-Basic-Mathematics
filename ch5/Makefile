@@ -4,28 +4,22 @@ INC = $(PWD)/include
 
 MAIN = $(SRC)/main
 
-LIBS = -lGL -lglut -lm -lglu
+LIBS = -lGL -lglut -lm -lGLU -lgsl
 
 SRCS = $(wildcard *.c)
 TARGET = $(SRCS:%.c=%)
 
-GL_WINDOW = $(MAIN)/gl_window
-XY_AXIS = $(MAIN)/xy_axis
-Y_X_PLOT = $(MAIN)/y_x_plot
-XYZ_AXIS = $(MAIN)/xyz_axis
-DRAW_CONE = $(MAIN)/draw_cone
-VECTOR_OPERATION_PLOT = $(MAIN)/vector_operation_plot
+SECOND_ODE = $(MAIN)/second_ode
+SECOND_ODE_PLOT = $(MAIN)/second_ode_plot
+SOP_PYTHON = $(MAIN)/sode.py
 
 all: main
 	@echo $(TARGET)
 	$(shell rm -rf build)
 	$(shell mkdir build)
-	$(shell cp $(GL_WINDOW) ./build/)
-	$(shell cp $(XY_AXIS) ./build/)
-	$(shell cp $(Y_X_PLOT) ./build/)
-	$(shell cp $(XYZ_AXIS) ./build/)
-	$(shell cp $(DRAW_CONE) ./build/)
-	$(shell cp $(VECTOR_OPERATION_PLOT) ./build/)
+	$(shell cp $(SECOND_ODE) ./build/)
+	$(shell cp $(SECOND_ODE_PLOT) ./build/)
+	$(shell cp $(SOP_PYTHON) ./build/)
 
 main:	_all
 	$(MAKE) -C $(MAIN)
