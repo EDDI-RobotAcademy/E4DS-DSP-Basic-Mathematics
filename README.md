@@ -6,6 +6,17 @@ Engineering Mathematics with C Programming for DSP(Digital Signal Processing)
 카페주소: https://cafe.naver.com/eddicorp  
 유튜브: https://www.youtube.com/channel/UCaYlgiL6pS2N5pxnXXd_6-w  
 
+## Prerequisite
+
+```make
+sudo apt-get install freeglut-dev3
+sudo apt-get install libgsl-dev
+sudo apt-get install python3
+sudo apt-get install python3-pip
+pip install sympy
+pip install matplotlib
+```
+
 ## Table of Contents
 
 ```make
