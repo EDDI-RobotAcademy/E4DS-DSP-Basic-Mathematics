@@ -27,6 +27,7 @@ void display(void)
         glVertex3f(0.0, -100.0, 0.0);
     glEnd();
 
+	// 이름 변경 필요
 	draw_y_x2();
 	glColor3f(1, 0, 0);
 	glLineWidth(5);
@@ -73,6 +74,7 @@ void draw_tangent(void)
 		y1 = 50 * sin(0.25 * t);
 		y2 = 50 * sin(0.25 * (t + delta));
 		tangent = (y2 - y1) / delta;
+		// lim h->0 [f(h+1) - f(h)] /h
 
 		if(cache && !(cnt % 1024))
 		{

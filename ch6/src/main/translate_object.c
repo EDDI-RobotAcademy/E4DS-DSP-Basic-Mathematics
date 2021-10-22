@@ -7,7 +7,9 @@
 #include <GL/glut.h>
 #include <GL/gl.h>
 
+// Unix Standard Header
 #include <unistd.h>
+// Signal Header
 #include <signal.h>
 
 #define SLICE	360
@@ -133,6 +135,13 @@ void reshape(int w, int h)
     glLoadIdentity();
 }
 
+// C언어 문법을 설계하신 분들이
+// void (*)(int)  signal_test(int signo, void (* handler)(int));
+// void (* signal_test(int signo, void (* handler)(int)))(int);
+// 이러한 형식을 가지는 함수들은 보통 전부 콜백 함수입니다.
+// C++ Boost
+void (* signal_test(int signo, void (* handler)(int)))(int);
+
 int main(int argc, char **argv)
 {
 	glutInit(&argc, argv);
@@ -141,8 +150,22 @@ int main(int argc, char **argv)
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Digital Signal Processing");
 
+	// return: void (*)(int)
+	// name: signal
+	// parameter: int, void (*)(int)
+	// void (* signal(int signo, void (* handler)(int)))(int);
+
+	// 첫번째 인자: 시그널 번호
+	// 두번째 인자: 해당 시그널이 왔을때 어떤 동작을 취할지 핸들러를 등록
+	// signal에 어떤 종류가 있는지 궁금하다면 아래 명령을 통해 확인할 수 있습니다!
+	// kill -l
+
+	// SIGALRM은 일정한 시간 이후에 어떤 동작을 할 것인가를 등록하면 됩니다!
 	signal(SIGALRM, timer_handler);
+	// 5초를 대기하겠습니다!
 	alarm(5);
+	// 5초 이후에는 SIGALRM이 발생해서 timer_handler가 동작!
+	// 실제 이 시점에 동작하지 않고 등록만 해둔다고 보면 됩니다.
 
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);

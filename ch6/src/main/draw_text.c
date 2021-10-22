@@ -74,6 +74,10 @@ void draw_resistance(void)
 	glEnd();
 
 	sprintf (label, "R");
+	// 글자 작성시에는 무조건 glRasterPos2f()를 사용합니다.
+	// 일반 점(Vertex)은 glVertexXf()를 사용하는 반면
+	// 글자는 Rasterization이라는 작업이 진행되므로
+	// glRasterPos2f()를 사용한다고 보면 더 좋다.
 	glRasterPos2f (64.0, 60.0);
 	drawStringBig (label);
 }

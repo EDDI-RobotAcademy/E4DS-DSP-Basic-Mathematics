@@ -16,9 +16,13 @@ void my_disp(void)
 }
 
 void onMouse(int button, int state, int x, int y) {
+	// GLUT_DOWN(마우스 클릭 했나요 ?)
+	// 마우스 클릭을 하지 않았다면 그냥 함수 종료
+	// 마우스 휠도 GLUT_DOWN으로 처리되므로 주의가 필요합니다!
 	if(state != GLUT_DOWN)
 		return;
 
+	// 현재 띄워진 창의 width(폭)과 height(높이) 값을 구해옵니다.
 	int window_width = glutGet(GLUT_WINDOW_WIDTH);
 	int window_height = glutGet(GLUT_WINDOW_HEIGHT);
 
@@ -26,12 +30,15 @@ void onMouse(int button, int state, int x, int y) {
 	GLfloat depth;
 	GLuint index;
 
-	glReadPixels(x, window_height - y - 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
-	glReadPixels(x, window_height - y - 1, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
-	glReadPixels(x, window_height - y - 1, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
+	//glReadPixels(x, window_height - y - 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
+	//glReadPixels(x, window_height - y - 1, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);
+	//glReadPixels(x, window_height - y - 1, 1, 1, GL_STENCIL_INDEX, GL_UNSIGNED_INT, &index);
 
+#if 0
 	printf("Clicked on pixel %d, %d, color %02hhx%02hhx%02hhx%02hhx, depth %f, stencil index %u\n",
 			x, y, color[0], color[1], color[2], color[3], depth, index);
+#endif
+	printf("Clicked on pixel %d, %d, \n", x, y);
 }
 
 int main(int argc, char **argv)

@@ -54,8 +54,11 @@ main (void)
        allocate/initialize the stepper, the control function, and the
        evolution function.
     */
+	// 룬게쿠타 방식의 2계 미분 방정식으로 stepping을 진행합니다.
     gsl_odeiv_step *step_ptr = gsl_odeiv_step_alloc (type_ptr, dimension);
+	// 허용 오차
     gsl_odeiv_control *control_ptr = gsl_odeiv_control_y_new (eps_abs, eps_rel);
+	// 계산하는 차원
     gsl_odeiv_evolve *evolve_ptr = gsl_odeiv_evolve_alloc (dimension);
 
     gsl_odeiv_system my_system;	/* structure with the rhs function, etc. */
@@ -80,6 +83,7 @@ main (void)
     tmax = 10.;			/* final t value */
     delta_t = 1.;
 
+	// 주의점이라면 2계 미분 방정식은 최소 2개의 초기값이 필요하다는 부분을 주의!
     y[0] = 1.;			/* initial x value */
     y[1] = 0.;			/* initial v value */
 
@@ -107,14 +111,6 @@ main (void)
 
 /*************************** rhs ****************************/
 /* 
-   Define the array of right-hand-side functions y[i] to be integrated.
-   The equations are:
-   x' = v                  ==>  dy[0]/dt = f[0] = y[1]
-   v' = -x + \mu v (1-x^2) ==>  dy[1]/dt = f[1] = -y[0] + mu*y[1]*(1-y[0]*y[0])
-  
-   * params is a void pointer that is used in many GSL routines
-   to pass parameters to a function
-
    x''(t) + x'(t) + x(t) = 0
    x''(t) = -x'(t) - x(t)
 
@@ -132,8 +128,12 @@ rhs (double t, const double y[], double f[], void *params_ptr)
     f[0] = y[1];
     f[1] = -y[0] + mu * y[1] * (1. - y[0] * y[0]);
 	*/
+	// 1계와 마찬가지로 반드시 표준형이어야 합니다!
+	// 첫번째 1차 미분이 무엇(치환)입니다 ~
 	f[0] = y[1];
+	// 두번째 2차 미분을 치환을 기반으로 어떻게 표현해야 하는지를 기록합니다.
 	f[1] = -y[1] - y[0];
+	/* Tip: 배열의 인덱스는 결국 미분의 횟수라고 생각해도 좋습니다 */
 
     return GSL_SUCCESS;		/* GSL_SUCCESS defined in gsl/errno.h as 0 */
 }

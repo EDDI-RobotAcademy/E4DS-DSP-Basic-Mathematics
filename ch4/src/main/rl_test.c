@@ -7,6 +7,20 @@
 // y' = 2y + x
 // https://www.wolframalpha.com/input/?i=y%27+%3D+2y+%2B+x%2C+y%280%29+%3D+1%2C+y%281%29
 // https://www.wolframalpha.com/input/?i=1%2F4+*+%285+*+e%5E2+-+3%29
+
+// 저항값: 1Kohm
+// 인덕턴스: 300uH
+// DC 전원: 5V
+
+// ---DC---R---L---GND---
+// 직렬 회로의 특성상 전류값이 일정함 i(t)
+// V = i(t) * R + L * [di(t) / dt]
+// 5 = y * R + L * y'
+// 미분 방정식의 표준형은 무조건 y'의 계수가 1이어야 합니다!!!
+// 5 / L = (R / L) * y + y'
+// 5 / 0.0003 = (1000 / 0.0003) * y + y'
+
+// y' = 5 / 0.0003 - (1000 / 0.0003) * y   <<<=== 표준형
 int odefunc (double x, const double y[], double f[], void *params)
 {
     // f[0] = x+2*y[0];   
