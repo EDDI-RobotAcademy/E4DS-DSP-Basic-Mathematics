@@ -15,6 +15,8 @@ sudo apt-get install python3
 sudo apt-get install python3-pip
 pip install sympy
 pip install matplotlib
+
+sudo apt install dirmngr gnupg apt-transport-https ca-certificates software-properties-common
 pip install spam
 ```
 
