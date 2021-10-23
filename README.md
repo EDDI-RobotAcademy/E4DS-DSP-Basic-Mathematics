@@ -15,6 +15,7 @@ sudo apt-get install python3
 sudo apt-get install python3-pip
 pip install sympy
 pip install matplotlib
+pip install spam
 ```
 
 ## Table of Contents
