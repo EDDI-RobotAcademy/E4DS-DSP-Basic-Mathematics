@@ -20,18 +20,19 @@ int main(int argc, char *argv[])
 	PyRun_SimpleString("import os");
 	//PyRun_SimpleString("sys.path.append(os.getcwd())");
 	PyRun_SimpleString("sys.path.append('/home/oem/proj/e4ds/E4DS-DSP-Basic-Mathematics/ch7/src/main')");
+	PyRun_SimpleString("sys.path.append(\".\")");
 
-	pName = PyUnicode_FromString("./pyc_lib"); // pyc_lib.py를 PyObject로 생성한다.
-	printf("pName: 0x%x", pName);
+	pName = PyUnicode_FromString("pyc_lib"); // pyc_lib.py를 PyObject로 생성한다.
+	printf("pName: 0x%x\n", pName);
 
 	pModule = PyImport_Import(pName); // 생성한 PyObject pName을 import한다.
-	printf("pModule: 0x%x", pModule);
+	printf("pModule: 0x%x\n", pModule);
 
 	pFunc = PyObject_GetAttrString(pModule, "hello_test"); // 실행할 함수인 hello_test을 PyObject에 전달한다.
-	printf("pFunc: 0x%x", pFunc);
+	printf("pFunc: 0x%x\n", pFunc);
 
 	pValue = PyObject_CallObject(pFunc, NULL); // pFunc에 매개변수를 전달해서 실행한다. 현재 매개변수가 NULL인 경우이다.
-	printf("pValue: 0x%x", pValue);
+	printf("pValue: 0x%x\n", pValue);
 
 	Py_Finalize();
 
