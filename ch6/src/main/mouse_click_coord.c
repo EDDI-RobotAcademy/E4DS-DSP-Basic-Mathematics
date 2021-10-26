@@ -15,6 +15,9 @@ void my_disp(void)
 	glFlush();
 }
 
+// glutMouseFunc() 여기서 동작하게 되면
+// 자동으로 마우스 클릭한 위치의 x, y값이 콜백으로 동작하는 함수에 설정됨
+// 그래서 onMouse에서 별도의 함수 호출 없이도 x, y값을 확보할 수 있습니다.
 void onMouse(int button, int state, int x, int y) {
 	// GLUT_DOWN(마우스 클릭 했나요 ?)
 	// 마우스 클릭을 하지 않았다면 그냥 함수 종료
@@ -23,12 +26,12 @@ void onMouse(int button, int state, int x, int y) {
 		return;
 
 	// 현재 띄워진 창의 width(폭)과 height(높이) 값을 구해옵니다.
-	int window_width = glutGet(GLUT_WINDOW_WIDTH);
-	int window_height = glutGet(GLUT_WINDOW_HEIGHT);
+	//int window_width = glutGet(GLUT_WINDOW_WIDTH);
+	//int window_height = glutGet(GLUT_WINDOW_HEIGHT);
 
-	GLbyte color[4];
-	GLfloat depth;
-	GLuint index;
+	//GLbyte color[4];
+	//GLfloat depth;
+	//GLuint index;
 
 	//glReadPixels(x, window_height - y - 1, 1, 1, GL_RGBA, GL_UNSIGNED_BYTE, color);
 	//glReadPixels(x, window_height - y - 1, 1, 1, GL_DEPTH_COMPONENT, GL_FLOAT, &depth);

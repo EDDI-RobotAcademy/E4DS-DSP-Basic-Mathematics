@@ -57,6 +57,8 @@ line_vertex vertices[9] = {
 	{ 55.0f, 45.0f, 75.0f, 45.0f }
 };
 
+// 선택한 컴포넌트의 영역을 잡는 작업을 하드코딩으로 한 부분입니다.
+// 향후 필요에 따라 클릭한 컴포넌트의 주변을 인식하도록 자동화시킬 필요가 있습니다.
 line_vertex pick_vertices[9] = {
 	{ 45.0f, 25.0f, 45.0f, 65.0f },
 	{ 45.0f, 25.0f, 85.0f, 25.0f },
@@ -122,8 +124,10 @@ void on_mouse(int button, int state, int x, int y)
 		return;
 #endif
 
+	// 우클릭등은 동작하지 않게 설정
 	if (button == GLUT_LEFT_BUTTON & state == GLUT_DOWN)
 	{
+		// clicked: 기존에 클릭된 사항이 있는지 체크
 		if (clicked == false)
 		{
 			printf("Click - Down\n");
@@ -135,6 +139,7 @@ void on_mouse(int button, int state, int x, int y)
 		}
 	}
 
+	// 마우스 클릭 이후 마우스 떼기
 	if (button == GLUT_LEFT_BUTTON & state == GLUT_UP)
 	{
 		printf("Click - Up\n");
@@ -164,6 +169,11 @@ void drag_mouse(int x, int y)
 
 	special_key = glutGetModifiers();
 
+	// clicked가 전역변수
+	// Multi Process, Multi Thread
+	// 동시다발적 접근이 가능하다는 것은 clicked Critical Section이 됨
+	// Mutex, Semaphore, Spinlock, Message Queue, Shared Memory
+	// 이를 통해 동기화 문제를 해결할 필요성이 있습니다!
 	if (clicked == true)
 	{
 #if 0
@@ -328,6 +338,7 @@ int main(int argc, char **argv)
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
 	glutMouseFunc(on_mouse);
+	// 새롭게 추가된 glutMotionFunc()은 움직임이 발생할때 활용하는 콜백등록 함수
 	glutMotionFunc(drag_mouse);
 	glutMainLoop();
 

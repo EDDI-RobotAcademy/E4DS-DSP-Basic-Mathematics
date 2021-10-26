@@ -119,6 +119,8 @@ void sim_reshape(int w, int h)
     glMatrixMode(GL_PROJECTION);
     glLoadIdentity();
 
+	// glOrtho(표기하고자 하는 최소 x값, 최대 x값, 화면상 나타는 최소 y, 최대 y, z는 관계없음)
+	// 즉 내가 보고자 하는 x, y, z의 범위를 지정할 수 있음
 	glOrtho(-0.000005, 0.000005, -0.7, 0.7, -1, 1);
 
     glMatrixMode(GL_MODELVIEW);
@@ -199,11 +201,15 @@ void keyboard_handler(unsigned char key, int x, int y)
 	int pid;
 	int i, status;
 
+	// fork -> execve
+	// OpenGL -> GPU
+#if 0
 	char *argv[5] = {"print_simulation"};
 	char *envp[] = {0};
 	char volt[64] = {0};
 	char coil[64] = {0};
 	char resist[64] = {0};
+#endif
 
 	switch(key)
 	{
@@ -854,6 +860,7 @@ int main (int argc, char **argv)
 	glutReshapeFunc(reshape);
 	glutMouseFunc(on_mouse);
 	glutMotionFunc(drag_mouse);
+	// 새롭게 추가된 요것은 키보드 입력을 처리하는 콜백 등록 함수
 	glutKeyboardFunc(keyboard_handler);
 	glutMainLoop();
 

@@ -50,6 +50,8 @@ void timer_handler(int signo)
 
 	text_x -= TRANS_VAL;
 
+	// post: 사후
+	// 변경할 사항들 전부 바꾸고 적용이후 이제 다시 그려주세요!
 	glutPostRedisplay();
 }
 
