@@ -38,3 +38,11 @@
 
 def hello_test():
 	print("Hello");
+
+def ret_string(z):
+	print(z)
+	return z
+
+def ret_intarr(a, b, c, d):
+	print(a, b, c, d)
+	return 3
