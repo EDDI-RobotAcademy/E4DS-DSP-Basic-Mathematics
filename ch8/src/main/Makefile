@@ -8,12 +8,12 @@ PWD = $(shell pwd)
 
 INC_DIRS = -I$(PWD)/../include
 
-LIBS = -lm -lGL -lglut -lGLU -lgsl
+LIBS = -lm -lGL -lglut -lGLU
 #LIBS = -lm
 
 OBJS = $(SRCS:%.c=%.o)
 
-TARGET = draw_resistance draw_text mouse_click_coord translate_object drag_drop_object rl_circuit_simulation
+TARGET = signal_plot digit_signal_plot ogl_uni_rand_hist ogl_gauss_rand_hist sine_fft256 fft1024_with_6G noisy_wave
 
 #FILE_CONTROL_DIR = $(PWD)/../file
 
@@ -29,27 +29,31 @@ LINEAR_ALGEBRA_OBJS = $(shell find $(LINEAR_ALGEBRA_DIR) -name '*.o')
 
 all:	$(TARGET)
 
-draw_resistance:	draw_resistance.o
+signal_plot:	signal_plot.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
-draw_text:	draw_text.o
+digit_signal_plot:	digit_signal_plot.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
-mouse_click_coord:	mouse_click_coord.o
+ogl_uni_rand_hist:	ogl_uni_rand_hist.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
-translate_object:	translate_object.o
+ogl_gauss_rand_hist:	ogl_gauss_rand_hist.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
-drag_drop_object:	drag_drop_object.o
+sine_fft256:	sine_fft256.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
-rl_circuit_simulation:	rl_circuit_simulation.o
+fft1024_with_6G:	fft1024_with_6G.o
+	@echo "$<"
+	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
+
+noisy_wave:		noisy_wave.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 

@@ -4,39 +4,52 @@ INC = $(PWD)/include
 
 MAIN = $(SRC)/main
 
-LIBS = -lGL -lglut -lGLU -lgsl -lm
+#LIBS = -lGL -lglut -lGLU -lgsl -lm
+LIBS = -I/usr/include/python3.8 -I/usr/include/x86_64-linux-gnu/python3.8 -lpython3.8
 
 SRCS = $(wildcard *.c)
 TARGET = $(SRCS:%.c=%)
 
-DRAW_RESISTANCE = $(MAIN)/draw_resistance
-DRAW_TEXT = $(MAIN)/draw_text
-MOUSE_CLICK_COORD = $(MAIN)/mouse_click_coord
-TRANSLATE_OBJECT = $(MAIN)/translate_object
-DRAG_DROP_OBJECT = $(MAIN)/drag_drop_object
-RL_CIRCUIT_SIM = $(MAIN)/rl_circuit_simulation
+PY_INTERCONNECT = $(MAIN)/py_interconnect
+PY_NORET = $(MAIN)/py_noret
+PY_INTRET = $(MAIN)/py_intret
+PY_STRINGRET = $(MAIN)/py_stringret
+PY_MODULE_COMPLETE = $(MAIN)/py_module_complete
 
-LINEAR_ALGEBRA = $(SRC)/linear_algebra
-SUBDIRS = $(LINEAR_ALGEBRA)
+SYMPY_TEST = $(MAIN)/sympy_test.py
+SYMPY_LT = $(MAIN)/sympy_laplace_transform.py
+SYMPY_HEAVISIDE = $(MAIN)/sympy_heaviside.py
+SYMPY_HEAVISIDE_APP = $(MAIN)/sympy_heaviside_app.py
+SYMPY_EVAL = $(MAIN)/sympy_eval.py
+SYMPY_EVAL_FOREACH = $(MAIN)/sympy_foreach_eval.py
+
+#LINEAR_ALGEBRA = $(SRC)/linear_algebra
+#SUBDIRS = $(LINEAR_ALGEBRA)
 
 all: main
 	@echo $(TARGET)
 	$(shell rm -rf build)
 	$(shell mkdir build)
-	$(shell cp $(DRAW_RESISTANCE) ./build/)
-	$(shell cp $(DRAW_TEXT) ./build/)
-	$(shell cp $(MOUSE_CLICK_COORD) ./build/)
-	$(shell cp $(TRANSLATE_OBJECT) ./build/)
-	$(shell cp $(DRAG_DROP_OBJECT) ./build/)
-	$(shell cp $(RL_CIRCUIT_SIM) ./build/)
+	$(shell cp $(PY_INTERCONNECT) ./build/)
+	$(shell cp $(PY_NORET) ./build/)
+	$(shell cp $(PY_INTRET) ./build/)
+	$(shell cp $(PY_STRINGRET) ./build/)
+	$(shell cp $(PY_MODULE_COMPLETE) ./build/)
+	$(shell cp $(SYMPY_TEST) ./build/)
+	$(shell cp $(SYMPY_LT) ./build/)
+	$(shell cp $(SYMPY_HEAVISIDE) ./build/)
+	$(shell cp $(SYMPY_HEAVISIDE_APP) ./build/)
+	$(shell cp $(SYMPY_EVAL) ./build/)
+	$(shell cp $(SYMPY_EVAL_FOREACH) ./build/)
 
-main:	_all
+#main:	_all
+main:
 	$(MAKE) -C $(MAIN)
 
-_all:
-	for dir in $(SUBDIRS); do \
-		$(MAKE) -C $$dir; \
-	done
+#_all:
+	#for dir in $(SUBDIRS); do \
+	#	$(MAKE) -C $$dir; \
+	#done
 
 clean:  mclear
 	$(shell rm -rf build)

@@ -8,12 +8,12 @@ PWD = $(shell pwd)
 
 INC_DIRS = -I$(PWD)/../include
 
-LIBS = -lm -lGL -lglut -lGLU -lgsl
+LIBS = -lm -lGL -lglut -lGLU
 #LIBS = -lm
 
 OBJS = $(SRCS:%.c=%.o)
 
-TARGET = draw_resistance draw_text mouse_click_coord translate_object drag_drop_object rl_circuit_simulation
+TARGET = mouse_wheel_test camera_test y_sin_x_zoom
 
 #FILE_CONTROL_DIR = $(PWD)/../file
 
@@ -29,27 +29,15 @@ LINEAR_ALGEBRA_OBJS = $(shell find $(LINEAR_ALGEBRA_DIR) -name '*.o')
 
 all:	$(TARGET)
 
-draw_resistance:	draw_resistance.o
+mouse_wheel_test:	mouse_wheel_test.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
-draw_text:	draw_text.o
+camera_test:	camera_test.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
-mouse_click_coord:	mouse_click_coord.o
-	@echo "$<"
-	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
-
-translate_object:	translate_object.o
-	@echo "$<"
-	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
-
-drag_drop_object:	drag_drop_object.o
-	@echo "$<"
-	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
-
-rl_circuit_simulation:	rl_circuit_simulation.o
+y_sin_x_zoom:	y_sin_x_zoom.o
 	@echo "$<"
 	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 

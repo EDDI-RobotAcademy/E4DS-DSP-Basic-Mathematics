@@ -6,14 +6,16 @@ endif
 
 PWD = $(shell pwd)
 
-INC_DIRS = -I$(PWD)/../include
+#INC_DIRS = -I$(PWD)/../include -I/usr/include/python3.8 -I/usr/include/x86_64-linux-gnu/python3.8
+INC_DIRS = -I/usr/include/python3.8 -I/usr/include/x86_64-linux-gnu/python3.8
 
-LIBS = -lm -lGL -lglut -lGLU -lgsl
+LIBS = -lpython3.8
+#LIBS = -lm -lGL -lglut -lGLU -lgsl
 #LIBS = -lm
 
 OBJS = $(SRCS:%.c=%.o)
 
-TARGET = draw_resistance draw_text mouse_click_coord translate_object drag_drop_object rl_circuit_simulation
+TARGET = py_interconnect py_noret py_intret py_stringret py_module_complete
 
 #FILE_CONTROL_DIR = $(PWD)/../file
 
@@ -23,35 +25,32 @@ TARGET = draw_resistance draw_text mouse_click_coord translate_object drag_drop_
 #RADAR_PRINCIPLES_OBJS = $(shell find $(RADAR_PRINCIPLES_DIR) -name '*.o')
 #RADAR_SIGNAL_PROCESSING_OBJS = $(shell find $(RADAR_SIGNAL_PROCESSING_DIR) -name '*.o')
 
-LINEAR_ALGEBRA_DIR = $(PWD)/../linear_algebra
+#LINEAR_ALGEBRA_DIR = $(PWD)/../linear_algebra
 
-LINEAR_ALGEBRA_OBJS = $(shell find $(LINEAR_ALGEBRA_DIR) -name '*.o')
+#LINEAR_ALGEBRA_OBJS = $(shell find $(LINEAR_ALGEBRA_DIR) -name '*.o')
 
 all:	$(TARGET)
 
-draw_resistance:	draw_resistance.o
+py_interconnect:	py_interconnect.o
 	@echo "$<"
-	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
+	$(CC) -o $@ $< $(LIBS)
 
-draw_text:	draw_text.o
+py_noret:	py_noret.o
 	@echo "$<"
-	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
+	$(CC) -o $@ $< $(LIBS)
 
-mouse_click_coord:	mouse_click_coord.o
+py_intret:	py_intret.o
 	@echo "$<"
-	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
+	$(CC) -o $@ $< $(LIBS)
 
-translate_object:	translate_object.o
+py_stringret:	py_stringret.o
 	@echo "$<"
-	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
+	$(CC) -o $@ $< $(LIBS)
 
-drag_drop_object:	drag_drop_object.o
+py_module_complete:	py_module_complete.o
 	@echo "$<"
-	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
-
-rl_circuit_simulation:	rl_circuit_simulation.o
-	@echo "$<"
-	$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
+	$(CC) -o $@ $< $(LIBS)
+	#$(CC) -o $@ $< $(LINEAR_ALGEBRA_OBJS) $(LIBS)
 
 .c.o:
 	@echo "======================================="
