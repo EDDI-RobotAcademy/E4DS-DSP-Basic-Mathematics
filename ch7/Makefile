@@ -15,6 +15,8 @@ PY_NORET = $(MAIN)/py_noret
 PY_INTRET = $(MAIN)/py_intret
 PY_STRINGRET = $(MAIN)/py_stringret
 PY_MODULE_COMPLETE = $(MAIN)/py_module_complete
+PYC_LIB = $(MAIN)/pyc_lib.py
+PY_MODULE = $(MAIN)/my_module.py
 
 SYMPY_TEST = $(MAIN)/sympy_test.py
 SYMPY_LT = $(MAIN)/sympy_laplace_transform.py
@@ -35,6 +37,8 @@ all: main
 	$(shell cp $(PY_INTRET) ./build/)
 	$(shell cp $(PY_STRINGRET) ./build/)
 	$(shell cp $(PY_MODULE_COMPLETE) ./build/)
+	$(shell cp $(PYC_LIB) ./build/)
+	$(shell cp $(PY_MODULE) ./build/)
 	$(shell cp $(SYMPY_TEST) ./build/)
 	$(shell cp $(SYMPY_LT) ./build/)
 	$(shell cp $(SYMPY_HEAVISIDE) ./build/)

@@ -8,7 +8,7 @@ void initialize(char* module_name, PyObject **pModule)
 	PyRun_SimpleString("import sys");
 	PyRun_SimpleString("sys.path.append(\".\")");
 
-	PyObject *pName = PyUnicode_FromString("my_module"); // pyc_lib.py를 PyObject로 생성한다.
+	PyObject *pName = PyUnicode_FromString("my_module"); // my_module.py를 PyObject로 생성한다.
     *pModule = PyImport_Import(pName);
 
     Py_DECREF(pName);
