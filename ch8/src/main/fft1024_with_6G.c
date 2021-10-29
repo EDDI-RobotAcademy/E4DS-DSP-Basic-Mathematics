@@ -227,6 +227,11 @@ void draw_spectrum(void)
 	if(t > period)
 		t = 0.0;
 
+	// FFT 전반
+	// 약점: 2^n이 아닌 경우 제대로된 결과를 얻지 못하니 주의!
+	// Bluestein FFT라는 것을 활용해야 2^n이 아니더라도 FFT가 처리됨
+	// GSL, python fft를 사용해서 C로 땡겨오거나
+	// Bluestein FFT를 구현해서 활용하면 됩니다.
 	t = 0.0;
 	for(i = 0; i < SLICE; t += SAMPLE_PERIOD, i++)
 	{
@@ -374,6 +379,7 @@ void draw_spectrum(void)
 		else
 			printf("\nN-%d Butterfly 완료\n", glob * count);
 	}
+	// FFT 전반 끝
 
 #if 0
 	for(i = 0; i < SLICE; i++)

@@ -1,6 +1,7 @@
 #define PY_SSIZE_T_CLEAN
 #include <Python.h>
 
+// 함수 인자의 있는 정보도 해당 함수 스택 프레임 내에 있는 변수
 void initialize(char* module_name, PyObject **pModule)
 {
     Py_Initialize();
@@ -25,8 +26,21 @@ void make_string(PyObject *pModule, char *arg)
     PyObject *pFunc, *pArgs, *pValue;
 
     pFunc = PyObject_GetAttrString(pModule, "make_string");
+	// Tuple이 뭔가요 ?
+	// Tuple은 const(C/C++), final(Java)
+	// 왜 const, final, Tuple등을 작성하나요 ? (함수형 언어 계열들)
+	// 생산성을 저해하는것이 무엇인가 ?
+	// 제품 개발시 협업을 하고 있으며
+	// 특히 데이터를 주고 받는 인터페이스가 되는 부분들
+	// 현재 들어온 데이터 xxx 인데 이부분을 이렇게 가공하면 해결되겠는데 ?
+	// 가공을 해서 데이터 처리 성공! ---> 구동 완료!
+	// 데이터를 주고 받는 인터페이스에 변경이 발생하였으므로
+	// 다른 정보를 받는 사람들도 같이 영향을 받게됨
+	// 애초에 이 데이터 자체가
+	// const, final, Tuple이였다면 발생조차 안할 문제였다는 것
     pArgs = PyTuple_New(1);
 
+	// 튜플에 문자열 정보를 저장함
     PyTuple_SetItem(pArgs, 0, PyUnicode_FromString(arg));
     pValue = PyObject_CallObject(pFunc, pArgs);
     Py_DECREF(pArgs);
@@ -78,6 +92,17 @@ int main(int argc, char *argv[])
     int i;
 
     //initialize(argv[1], &pModule);
+	// PyObject *pModule;
+	// ----------
+	// | 정보값 | 0x1000
+	// ~~~~~~~~~~ <<<---- main Stack
+	// ----------
+	// | 0x1000 | 0x2000
+	// ----------
+	// ~~~~~~~~~~ <<<---- initialize Stack
+	// ----------
+	// | 0x2000 | 0x3000
+	// ----------
     initialize("my_module", &pModule);
 
     make_string(pModule, "Hello World!");

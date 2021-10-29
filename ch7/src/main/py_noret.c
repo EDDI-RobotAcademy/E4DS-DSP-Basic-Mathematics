@@ -4,6 +4,7 @@
 
 int main(int argc, char *argv[])
 {
+	// 없어도 무방
     wchar_t *program = Py_DecodeLocale(argv[0], NULL);
 	PyObject *pName, *pModule, *pFunc, *pValue;
 
@@ -14,8 +15,12 @@ int main(int argc, char *argv[])
     }
 
     Py_SetProgramName(program);
+	// 파이썬을 C와 연동하기 위한 초기 설정을 진행함
     Py_Initialize();
 
+	// 만약 이를 응용하여 응용 솔루션을 제공하는 경우라면
+	// 실제 시스템 환경 변수쪽에 *.py 라이브러리를 이동시켜서
+	// 언제든지 라이브러리가 호출될 수 있도록 만들어줘야합니다!
 	PyRun_SimpleString("import sys");
 	//PyRun_SimpleString("import os");
 	//PyRun_SimpleString("sys.path.append(os.getcwd())");

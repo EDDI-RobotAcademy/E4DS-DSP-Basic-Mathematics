@@ -82,6 +82,7 @@ int get_sample(int num, double mean, double std_dev)
 
 	srand(time(NULL));
 
+	// Box-Muller Transform(가우시안 분포 형식의 랜덤 만들기)
 	for(i = 0; i < num; i++)
 	{
 		double x, y, r;
@@ -221,6 +222,7 @@ void draw_gauss_rand_hist(void)
 void safety_exit(int signo)
 {
 	printf("Exit Safely\n");
+	// TODO: x_vertices, y_vertices free too
 	free(hist_buf);
 	exit(0);
 }

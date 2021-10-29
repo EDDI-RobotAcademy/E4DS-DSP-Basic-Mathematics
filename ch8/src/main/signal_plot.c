@@ -58,11 +58,14 @@ void reshape(int w, int h)
         glLoadIdentity();
 }
 
+// f = 1 / T
 void calc_period(float *freq, float *period)
 {
 	*period = 1 / (*freq);
 }
 
+// sin(wt) = sin(2 * pi * f * t)
+// w = 2 * pi * f
 void calc_angular_velocity(float *freq, float *ang_vel)
 {
 	*ang_vel = 2 * M_PI * (*freq);
@@ -85,6 +88,7 @@ void draw_omega_sin(void)
 	calc_period(&freq, &period);
 	calc_angular_velocity(&freq, &omega);
 
+	// 샘플링 속도
 	t = step = get_step(SLICE, period);
 
 	if(t > period)

@@ -139,6 +139,7 @@ int main(int argc, char **argv)
 	glutReshapeFunc(reshape);
 
 	//glutMouseWheelFunc(wheel_zoom_in_out);
+	// 실제 마우스 휠 처리 파트
 	glutMouseFunc(mouse);
 
 	glutMainLoop();

@@ -103,6 +103,13 @@ void gltDrawTorus(GLfloat majorRadius, GLfloat minorRadius,
 	double majorStep = 2.0f*GLT_PI / numMajor;
 	double minorStep = 2.0f*GLT_PI / numMinor;
 	int i, j;
+
+	// 작은 원이 있고
+	// 중심을 기준으로 이 원을 돌려서 도너츠를 만든다.
+	// 그냥 원만들고 돌리면 되지 왜 minor와 major가 있냐 ?
+	// cone: 원뿔 ===> 원을 구성하는 점이 몇 개인가 <<<
+	// 원을 구성하는 점이 몇 개인지를 의미함
+	// major는 큰원, minor는 작은원
 	for (i=0; i<numMajor; ++i)
 	{
 		double a0 = i * majorStep;
@@ -206,6 +213,7 @@ void render_scene(void)
 	glRotatef(yRot, 0.0f, 1.0f, 0.0f);
 #endif
 
+	// 도너츠를 그리는 부분
 	gltDrawTorus(0.35, 0.15, 40, 20);
 	glPopMatrix();
 
@@ -368,6 +376,9 @@ int main(int argc, char **argv)
 	glutMouseFunc(mouse);
 
 	SetupRC();
+	// animation 구현시 필요함
+	// 33 ms 마다 TimerFunction이 동작해서
+	// 위치를 이동시키거나 혹은 회전시키거나 해서 애니메이션을 만든다.
 	glutTimerFunc(33, TimerFunction, 1);
 
 	glutMainLoop();

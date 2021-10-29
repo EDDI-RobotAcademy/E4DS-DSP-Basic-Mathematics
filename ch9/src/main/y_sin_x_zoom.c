@@ -13,6 +13,8 @@ float lx=0.0f,lz=-1.0f;
 // 카메라 xz 위치
 float wx=0.0f,wz=5.0f;
 
+// 실제 OpenGL에서 x, z가 평면을 구성하고
+// 높이는 y가 처리합니다.
 #define SLICE	360
 
 typedef GLfloat GLTMatrix[16];
@@ -216,7 +218,7 @@ void render_scene(void)
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 	glPushMatrix();
-	DrawGround();
+	//DrawGround();
 	gluLookAt(  wx, 1.0f, wz,
             wx+lx, 1.0f,  wz+lz,
             0.0f, 1.0f,  0.0f);
