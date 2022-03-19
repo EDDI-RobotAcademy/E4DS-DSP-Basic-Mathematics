@@ -15,8 +15,11 @@ sudo apt-get install freeglut3-dev
 sudo apt-get install libgsl-dev
 sudo apt-get install python3
 sudo apt-get install python3-pip
+
 pip install sympy
 pip install matplotlib
+pip install numpy
+pip install pillow
 
 sudo apt install dirmngr gnupg apt-transport-https ca-certificates software-properties-common
 
