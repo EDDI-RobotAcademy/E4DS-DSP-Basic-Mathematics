@@ -9,7 +9,7 @@ Engineering Mathematics with C Programming for DSP(Digital Signal Processing)
 ## Prerequisite
 
 ```make
-
+sudo apt-get update
 
 sudo apt-get install freeglut-dev3
 sudo apt-get install libgsl-dev
@@ -40,3 +40,5 @@ pip install spam
 7) Laplace Transform
 8) Fourier Transform
 ```
+
+
