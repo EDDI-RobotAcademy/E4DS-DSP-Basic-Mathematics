@@ -9,6 +9,8 @@ Engineering Mathematics with C Programming for DSP(Digital Signal Processing)
 ## Prerequisite
 
 ```make
+
+
 sudo apt-get install freeglut-dev3
 sudo apt-get install libgsl-dev
 sudo apt-get install python3
