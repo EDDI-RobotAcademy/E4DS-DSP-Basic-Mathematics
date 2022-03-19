@@ -33,6 +33,24 @@ sudo apt install r-base
 pip install spam
 ```
 
+## How to upgrade python package
+
+```make
+python -m pip install --upgrade
+```
+
+## How to Install Specific Package Version
+
+```make
+python -m pip install SomePackage==1.0.4    # specific version
+```
+
+## How to remove python package
+
+```make
+
+```
+
 ## Table of Contents
 
 ```make
