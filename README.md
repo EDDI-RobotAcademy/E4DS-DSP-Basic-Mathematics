@@ -9,21 +9,46 @@ Engineering Mathematics with C Programming for DSP(Digital Signal Processing)
 ## Prerequisite
 
 ```make
-sudo apt-get install freeglut-dev3
+sudo apt-get update
+
+sudo apt-get install freeglut3-dev
 sudo apt-get install libgsl-dev
 sudo apt-get install python3
 sudo apt-get install python3-pip
+
 pip install sympy
 pip install matplotlib
+pip install numpy
+pip install pillow
 
 sudo apt install dirmngr gnupg apt-transport-https ca-certificates software-properties-common
 
 sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-keys E298A3A825C0D65DFD57CBB651716619E084DAB9
 sudo add-apt-repository 'deb https://cloud.r-project.org/bin/linux/ubuntu focal-cran40/'
 
+sudo apt-get update
+
 sudo apt install r-base
 
 pip install spam
+```
+
+## How to upgrade python package
+
+```make
+python -m pip install --upgrade
+```
+
+## How to Install Specific Package Version
+
+```make
+python -m pip install SomePackage==1.0.4    # specific version
+```
+
+## How to remove python package
+
+```make
+
 ```
 
 ## Table of Contents
@@ -38,3 +63,4 @@ pip install spam
 7) Laplace Transform
 8) Fourier Transform
 ```
+
