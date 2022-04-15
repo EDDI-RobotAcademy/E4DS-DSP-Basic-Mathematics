@@ -55,6 +55,8 @@ void print_vec3(vec3 r)
 
 float magnitude(vec3 v)
 {
+	// -lm 컴파일시 옵션, math.h
+	//     sqrt(pow(v.x, 2) + pow(v.y, 2) + pow(v.z, 2))
 	return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 }
 
@@ -110,6 +112,7 @@ void gramschmidt_normalization(vec3 *arr, vec3 *res, vec3 r)
 	dot2 = r.dot(arr[2], res[1]);
 	// 3 / 5 {2, 0, 1}
 	r.scale(dot2 * (1.0 / pow(mag2, 2.0)), res[1], &scale2);
+	//r.sub(res[2], scale2, &res[2]);
 	r.sub(res[2], scale2, &res[2]);
 	// {1, 0, 1} - {6 / 5, 0, 3 / 5}
 	// {-1 / 5, 0, 2 / 5}

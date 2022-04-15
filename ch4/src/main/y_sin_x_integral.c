@@ -5,7 +5,7 @@
 
 #include <GL/glut.h>
 
-void draw_y_x2(void);
+void draw_y_sinx(void);
 void draw_big_rect(void);
 void draw_small_rect(void);
 
@@ -32,9 +32,9 @@ void display(void)
 	// 선의 굵기를 조정할 수 있음
 	glLineWidth(3);
 	// y = sin(x) 그리기 
-	draw_y_x2();
+	draw_y_sinx();
 	glLineWidth(1);
-	glColor3f(0, 0, 1);
+	//glColor3f(0, 0, 1);
 	//draw_small_rect();
 	glColor3f(0, 1, 0);
 	draw_big_rect();
@@ -61,7 +61,7 @@ void reshape(int w, int h)
     glLoadIdentity();
 }
 
-void draw_y_x2(void)
+void draw_y_sinx(void)
 {
 	float t = -100.0, step = 0.001;
 	float x = 0, x2 = 0, y2, cx, cy;

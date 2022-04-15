@@ -342,6 +342,7 @@ void adjust_3x6_mat(float (*A)[6], int idx, float (*R)[6])
 
 	scale = A[idx][idx];
 
+#if 0
     for(i = idx + 1; i < 3; i++)
     {
         //div_factor = -A[idx][idx] / A[idx + 1][idx];
@@ -356,6 +357,23 @@ void adjust_3x6_mat(float (*A)[6], int idx, float (*R)[6])
         for(j = 0; j < 6; j++)
             R[i][j] = A[idx][j] * div_factor + A[i][j];
     }
+#else
+    for(i = 0; i < 3; i++)
+    {
+		if (i == idx)
+			continue;
+
+        div_factor = -A[i][idx] / A[idx][idx];
+        printf("div_factor = %f\n", div_factor);
+
+		if(div_factor == 0.0)
+			continue;
+
+        for(j = 0; j < 6; j++)
+            R[i][j] = A[idx][j] * div_factor + A[i][j];
+    }
+
+#endif
 
 	for(j = 0; j < 6; j++)
 		R[idx][j] = A[idx][j] / scale;
@@ -366,17 +384,22 @@ void gauss_elim_mat(float (*A)[3], float (*R)[3])
 	float mid[3][6] = {};
 
 	create_3x6_mat(A, mid);
-#if __DEBUG__
+#if DEBUG
 	print_3x6_mat(mid);
 #endif
 
 	adjust_3x6_mat(mid, 0, mid);
-#if __DEBUG__
+#if DEBUG
     print_3x6_mat(mid);
 #endif
 
 	adjust_3x6_mat(mid, 1, mid);
-#if __DEBUG__
+#if DEBUG
+    print_3x6_mat(mid);
+#endif
+
+	adjust_3x6_mat(mid, 2, mid);
+#if DEBUG
     print_3x6_mat(mid);
 #endif
 

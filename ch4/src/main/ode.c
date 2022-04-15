@@ -6,6 +6,16 @@
 // y' = 2y + x
 // https://www.wolframalpha.com/input/?i=y%27+%3D+2y+%2B+x%2C+y%280%29+%3D+1%2C+y%281%29
 // https://www.wolframalpha.com/input/?i=1%2F4+*+%285+*+e%5E2+-+3%29
+// 미분 방정식을 푸는 방법
+// 1. 미분 방정식의 표준형을 작성한다.
+//    y' <<<--- 미분항의 계수를 1로 만들어야 표준형이됨
+// 2. 표준형의 y항 계수식을 통해 적분 인자를 구한다.
+// 3. 적분 인자를 양변에 곱한다.
+//    2y' + y = 3 -> y' + y / 2 = 3 / 2
+//    여기서 적분 인자는 1 / 2가 됨
+//    좀 더 정확하게는 exp^integral(1/2) 형태가 됨
+// 4. 양변에 대한 계산(적분)을 진행한다.
+// 5. 양변을 exp^적분인자 로 나누어 y에 대해 정리한다.
 int odefunc (double x, const double y[], double f[], void *params)
 {
 	// 계산하고자 하는 미분 방정식의 표준형식을 여기에 기록함
@@ -40,9 +50,12 @@ int main(void)
 	// 루프를 돌면서 각 케이스별 미분 방정식을 계산함
     for (i = 1; i <= xf; i++)
     {
+		// 0 ~ 10 - x input
         double xi = x0 + i * (xf-x0) / xf;
 		// 결국 이 코드를 다시 재해석하자면
 		// x가 0일 경우, 1일 경우, ... , 10일 경우에 대해 각각을 해석한다고 보면 됩니다!
+		// 앞서서 룬게쿠타 4-5차 방식으로 미분 방정식을 계산하도록
+		// odefunc을 만들었고 이에 대한 설정값들로 xi를 넣고 이에 대한 y값을 계산한다.
         int status = gsl_odeiv2_driver_apply (d, &x, xi, y);
 
         if (status != GSL_SUCCESS)
@@ -52,6 +65,7 @@ int main(void)
         }
 
         printf ("%.8e %.8e\n", x, y[0]);
+		printf ("x = %lf, xi = %lf\n", x, xi);
     }
 
 	// malloc 혹은 new 처럼 Heap에 메모리를 할당하기 때문에
