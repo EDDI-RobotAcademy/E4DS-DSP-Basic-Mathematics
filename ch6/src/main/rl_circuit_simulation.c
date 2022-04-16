@@ -614,7 +614,8 @@ void calc_differential_eq(void)
 	double i;
     double x0 = 0.0,  xf = 10.0;
     double x = x0;
-    double y[1] = { 0.5 };
+    //double y[1] = { 0.5 };
+    double y[1] = { 0.0 };
 	double delta = 0.0000001;
 
 	for (i = 0; i <= xf; i += delta)
@@ -856,6 +857,8 @@ int main (int argc, char **argv)
 	glutInitWindowPosition(0, 0);
 	glutCreateWindow("Digital Signal Processing");
 
+	printf("저항 1000, 인덕터: 0.0003, 전압: 5V\n");
+
 	glutDisplayFunc(display);
 	glutReshapeFunc(reshape);
 	glutMouseFunc(on_mouse);
@@ -896,6 +899,10 @@ rhs (double t, const double y[], double f[], void *params_ptr)
 }
 
 #if 0
+
+주석: 현재 아래 상황은 방전 상황입니다.
+      또한 현재 코드는 충전 상황입니다.
+	  두 가지 버전으로 작성이 필요함.
 
 V = iR + L * di /dt
 초기조건 V_L(t) | (t=0) ===> V_L(0) = 0V
